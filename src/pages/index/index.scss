@@ -7,8 +7,21 @@
           position: absolute;
           top: 24px;
           left: 5vw;
-          width: 90px;
+          width: 93vw;
       }
   }
-    
-}
+    .in_nav{
+      display: flex;
+      background-color: #fff;
+      .nav_img{
+        text-align: center;
+        width: 25%;
+        .img{
+          width: 1 vw;
+          img{
+            width: 12vw;
+          }
+        }
+      }
+    }
+} 

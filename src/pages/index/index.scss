@@ -10,7 +10,7 @@
           width: 93vw;
       }
   }
-    .in_nav{
+  .in_nav{
       display: flex;
       background-color: #fff;
       .nav_img{
@@ -22,6 +22,50 @@
             width: 12vw;
           }
         }
+      }
+    }
+  .index_squad{
+    background-color: #fff;
+      .squad_tab{
+        display: flex;
+        padding: 30px 20px;
+        background-color: #FFF;
+        justify-content: space-between;
+        padding: 15px 10px;
+        :nth-child(1){
+          font-size: 20px;
+          font-weight: 600;
+        }
+        :nth-child(2){
+          color: #333;
+        }
+      }
+      .squad_list{
+       display: flex;
+       flex-wrap: wrap ;
+       .list{
+         width:50% ;
+         display: flex;
+         background-color: #fff;
+        border: 5px solid #ccc;
+          .left{
+            flex: 3;
+            :nth-child(2){
+              color: #ccc;
+              display: block;
+              padding: 5px 0;
+            }
+          }
+
+        .right{
+          flex: 1;
+          img{
+            width: 16vw;
+            margin: 10px;
+          }
+        }
+       }
+       
       }
     }
 } 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react'
 import { Carousel, div } from 'antd-mobile';
@@ -16,17 +17,22 @@ export default class componentName extends Component {
     state = {
         swiperList: [],
         imgHeight: 176,
+        groupsList: []
     }
     async componentDidMount() {
         let swiperRes = await Axios.get('http://localhost:8080/home/swiper')
-        console.log(swiperRes);
+        let groupsList = await Axios.get('http://localhost:8080/home/groups?area=AREA%7C88cff55c-aaa4-e2e0')
+
+
         this.setState({
 
-            swiperList: swiperRes.data.body
+            swiperList: swiperRes.data.body,
+            groupsList: groupsList.data.body
+
         })
 
     };
-  
+
     render() {
         return (
             <div className='index'>
@@ -51,8 +57,6 @@ export default class componentName extends Component {
                                     alt=""
                                     style={{ width: '100%', verticalAlign: 'top' }}
                                     onLoad={() => {
-                                        // fire window resize event to change height
-                                        window.dispatchEvent(new Event('resize'));
                                         this.setState({ imgHeight: 'auto' });
                                     }}
                                 />
@@ -63,7 +67,11 @@ export default class componentName extends Component {
                     </Carousel> : null}
                     {/* 搜索框home */}
                     <div className='search'>
-                        <SearchInput />
+                        <SearchInput
+                            onCity={() => { console.log("城市"); }}
+                            onInput={() => { console.log("输入框"); }}
+                            onMap={() => { console.log("地图") }}
+                        />
                     </div>
                     {/* 搜索框end */}
                 </div>
@@ -80,6 +88,27 @@ export default class componentName extends Component {
                     ))}
                 </div>
                 {/* 导航end */}
+                {/* 租房小组home */}
+                <div className="index_squad">
+                    <div className="squad_tab">
+                        <span>租房小组</span>
+                        <span>更多</span>
+                    </div>
+                    <div className="squad_list">
+                        {this.state.groupsList.map((v, i) => (
+                            <div className="list" key={v.id}>
+                                <div className="left">
+                                    <span>{v.title}</span>
+                                    <span>{v.desc}</span>
+                                </div>
+                                <div className="right">
+                                    <img src={`http://localhost:8080${v.imgSrc}`} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                {/* 租房小组end */}
             </div >
         );
     }

@@ -19,7 +19,7 @@ export default class index extends Component {
                 {/*搜素框左边home */}
                 <div className="seach_left">
                     <div className="city">
-                        <span onClick={this.hendCity}>上海</span>
+                        <span onClick={this.hendCity}>{this.props.cityName && this.props.cityName.slice(0, 2)}</span>
                         <i className="iconfont icon-arrow"></i>
                     </div>
                     <div className='input' onClick={this.hendIput}>
@@ -32,7 +32,7 @@ export default class index extends Component {
                 <div className='seach_right' onClick={this.hendMap}>
                     <i className="iconfont icon-map"></i>
                 </div>
-                
+
             </ div>
         )
     }

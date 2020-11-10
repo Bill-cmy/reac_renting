@@ -1,38 +1,71 @@
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from 'react'
-import { Carousel, div } from 'antd-mobile';
-import Axios from 'axios';
+import React from 'react'
+import { Carousel } from 'antd-mobile';
+import { withRouter } from 'react-router-dom'
+
 import './index.scss'
+
+import { BASE_URL, API } from 'utils';
 import img1 from 'assets/images/nav-1.png'
 import img2 from 'assets/images/nav-2.png'
 import img3 from 'assets/images/nav-3.png'
 import img4 from 'assets/images/nav-4.png'
 import SearchInput from 'components/searchinput/index';
-console.log(img1, img2, img3, img4);
+
 const img = [{ img: img1, title: '整租' }, { img: img2, title: '合租' },
 { img: img3, title: '地图找房' }, { img: img4, title: '去出租 ' }]
 
-export default class componentName extends Component {
+// console.log(BASE_URL, "ssss", process.env);
+class Index extends React.PureComponent {
     state = {
         swiperList: [],
         imgHeight: 176,
-        groupsList: []
+        groupsList: [],
+        newList: [],
+        resule: {}
     }
     async componentDidMount() {
-        let swiperRes = await Axios.get('http://localhost:8080/home/swiper')
-        let groupsList = await Axios.get('http://localhost:8080/home/groups?area=AREA%7C88cff55c-aaa4-e2e0')
 
-
+        let swiperList = await API.get(`/home/swiper`)
+        let groupsList = await API.get(`/home/groups?area=AREA%7C88cff55c-aaa4-e2e0`);
+        let newList = await API.get(`/home/news?area=AREA%7C88cff55c-aaa4-e2e0`);
+        let resule = await this.getCurrentCity();
         this.setState({
 
-            swiperList: swiperRes.data.body,
-            groupsList: groupsList.data.body
+            swiperList,
+            groupsList,
+            newList,
+            resule
 
         })
 
     };
 
+    getCurrentCity() {
+        // 拿到当前城市的名称
+        var myCity = new window.BMap.LocalCity();
+        return new Promise(function (resove, reject) {
+            try {
+
+                myCity.get((result) => {
+                    resove(result);
+                })
+            } catch (e) {
+                reject(e);
+            }
+
+        })
+    }
+    // 跳转到城市页面
+    toCityList = () => {
+        this.props.history.push('/citylist');
+        console.log(this.props);
+    }
+    // 跳转到地图页面
+    toMap = () => {
+        this.props.history.push('/map')
+    }
     render() {
         return (
             <div className='index'>
@@ -68,9 +101,11 @@ export default class componentName extends Component {
                     {/* 搜索框home */}
                     <div className='search'>
                         <SearchInput
-                            onCity={() => { console.log("城市"); }}
+                            onCity={this.toCityList}
                             onInput={() => { console.log("输入框"); }}
-                            onMap={() => { console.log("地图") }}
+                            onMap={this.toMap}
+
+                            cityName={this.state.resule.name}
                         />
                     </div>
                     {/* 搜索框end */}
@@ -102,15 +137,40 @@ export default class componentName extends Component {
                                     <span>{v.desc}</span>
                                 </div>
                                 <div className="right">
-                                    <img src={`http://localhost:8080${v.imgSrc}`} />
+                                    <img src={`${BASE_URL}${v.imgSrc}`} />
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
                 {/* 租房小组end */}
+                {/* 最新资讯home */}
+                <div className='index_new'>
+                    <div className='new_tetle'>最新资讯 </div>
+                    <div className='list_resource'>
+                        {this.state.newList.map((v, i) => (
+
+                            <div className='item' key={v.id}>
+                                <div className='left'>
+                                    <img src={`${BASE_URL}${v.imgSrc}`} />
+                                </div>
+                                <div className='right'>
+                                    <div>{v.title}</div>
+                                    <div className='bottom'>
+                                        <span>{v.from}</span>
+                                        <span>{v.date}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        ))}
+                    </div>
+                </div>
+                {/* 最新资讯end */}
             </div >
         );
     }
 
 }
+// 为了让组件，拿到hashtory对象 使用这种组件包裹的方式
+export default withRouter(Index);

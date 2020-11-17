@@ -6,7 +6,7 @@ export const BASE_URL = process.env.REACT_APP_BASE_URL;
 //统一封装请求
 export const API = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000,
+    timeout: 5000,
     headers: { 'X-Custom-Header': 'foobar' }
 });
 

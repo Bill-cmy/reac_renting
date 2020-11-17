@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import { HashRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { Provider } from 'react-redux';
 import Home from 'pages/home'
 import Citylist from 'pages/citylist'
 import Map from 'pages/map'
-
+import store from 'store';
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <Provider store={store}>
         {/*l路由定义 */}
-        <HashRouter>
+        <BrowserRouter>
 
           {/* 导航区 */}
 
@@ -24,8 +25,8 @@ export default class App extends Component {
           <Route path='/citylist' component={Citylist} />
           {/* 地图页面 */}
           <Route path='/map' component={Map} />
-        </HashRouter>
-      </div>
+        </BrowserRouter>
+      </Provider>
     )
   }
 }

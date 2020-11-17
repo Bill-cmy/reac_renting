@@ -1,0 +1,40 @@
+
+.list-area{
+   
+    width: 100vw;
+    height: calc(100vh - 50px);
+    position: relative;
+   .list-item{  
+    background-color: #FFF;
+    .tetle{
+        font-size: 12px;
+        color: #CCC;
+        padding: 15px 5px;
+        background-color: aqua
+
+    }
+    .item{
+        font-size: 14px;
+        padding: 15px 5px;
+        border-bottom: 1px solid #999;
+    }
+   }
+   .list_right{
+        position: absolute;
+        right: 5px;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        span{
+            width: 16px;
+            height: 16px;
+            margin: 5px 0;
+            text-align: center;
+            &.active{
+                color: #FFF;
+                border-radius: 50%;
+                background-color: #21b97a;
+            }
+        }
+   }
+}

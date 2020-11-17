@@ -3,6 +3,7 @@
 import React from 'react'
 import { Carousel } from 'antd-mobile';
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import './index.scss'
 
@@ -22,21 +23,18 @@ class Index extends React.PureComponent {
         swiperList: [],
         imgHeight: 176,
         groupsList: [],
-        newList: [],
-        resule: {}
+        newList: []
     }
+    // 监听事件
     async componentDidMount() {
 
         let swiperList = await API.get(`/home/swiper`)
         let groupsList = await API.get(`/home/groups?area=AREA%7C88cff55c-aaa4-e2e0`);
         let newList = await API.get(`/home/news?area=AREA%7C88cff55c-aaa4-e2e0`);
-        let resule = await this.getCurrentCity();
         this.setState({
-
             swiperList,
             groupsList,
             newList,
-            resule
 
         })
 
@@ -47,20 +45,17 @@ class Index extends React.PureComponent {
         var myCity = new window.BMap.LocalCity();
         return new Promise(function (resove, reject) {
             try {
-
                 myCity.get((result) => {
                     resove(result);
                 })
             } catch (e) {
                 reject(e);
             }
-
         })
     }
     // 跳转到城市页面
     toCityList = () => {
-        this.props.history.push('/citylist');
-        console.log(this.props);
+        this.props.history.push({ pathname: '/citylist' });
     }
     // 跳转到地图页面
     toMap = () => {
@@ -75,7 +70,6 @@ class Index extends React.PureComponent {
                         infinite
                         autoplayInterval={1000}
                         speed={200}
-
                     >
                         {/* 轮播图home */}
                         {this.state.swiperList.map(val => (
@@ -86,7 +80,6 @@ class Index extends React.PureComponent {
                             >
                                 <img
                                     src={`http://localhost:8080${val.imgSrc}`}
-
                                     alt=""
                                     style={{ width: '100%', verticalAlign: 'top' }}
                                     onLoad={() => {
@@ -105,7 +98,7 @@ class Index extends React.PureComponent {
                             onInput={() => { console.log("输入框"); }}
                             onMap={this.toMap}
 
-                            cityName={this.state.resule.name}
+                            cityName={this.props.cityName.name}
                         />
                     </div>
                     {/* 搜索框end */}
@@ -172,5 +165,10 @@ class Index extends React.PureComponent {
     }
 
 }
+const mapStateToProps = (state) => {
+    return {
+        cityName: state.indexReducer.cityName
+    }
+}
 // 为了让组件，拿到hashtory对象 使用这种组件包裹的方式
-export default withRouter(Index);
+export default withRouter(connect(mapStateToProps)(Index));

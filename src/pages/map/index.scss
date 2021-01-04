@@ -1,7 +1,69 @@
 .mao_Search{
     .map_area{
-        height: calc(100vh - 50px);
         width: 100vw;
+        height: calc(100vh - 50px);
         background-color: red;
+        .cicle{
+            z-index: 100;
+            width: 70px;
+            height: 70px;
+            color: #fff;
+            line-height: 1;
+            cursor: pointer;
+            position: absolute;
+            text-align: center;
+            border-radius: 100%;
+            display: inline-block;
+            background: rgba(12,181,106,.9);
+            border: 2px solid hsla(0,0%,100%,.8);
+            transform: translateX(-50%) translateY(-50%);
+
+         }
+         .rect{
+            z-index: 100;
+            width: 120px;
+            height: 20px;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            position: absolute;
+            display: inline-block;
+            background: rgba(12,181,106,.9);
+            border: 2px solid hsla(0,0%,100%,.8);
+            transform: translateX(-50%) translateY(-50%);
+         }
+        
     }
+    .list_area{
+        height: 330px;
+        left: 0;
+        right: 0;
+        bottom:-330px;
+        position:fixed;
+        background-color: #fff;
+        overflow: auto;
+        transition:2s bottom ;
+        &.show{
+            bottom: 0;
+        }
+        .head{
+            display:flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #CCC;
+            span{
+                &:nth-child(1){
+                    padding: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                &:nth-child(2){
+                    padding: 10px;
+                    font-size: 14px;
+                    font-weight: normal;
+                }
+            }
+        }
+    }
+  
 }

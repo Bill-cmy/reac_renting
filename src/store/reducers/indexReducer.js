@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 
 
-import { FETCH_CITYLIST, SE_CURRENT_CITYT } from "store/constants"
+import { FETCH_CITYLIST, SE_CURRENT_CITYT, CHANGE_HOME_TAB } from "store/constants"
 // 首页的数据   
 // 初始值 
 const defaultState = {
@@ -17,6 +17,7 @@ const defaultState = {
     cityList: [],
     // 我们排列好的城市列表数据
     sortedcList: [],
+    selectedTab: 'rent',
 }
 // 
 
@@ -44,6 +45,14 @@ export default function (state = defaultState, action) {
                     name: cityNames
                 },
                 sortedcList: [...sortedcList]
+
+            }
+        }
+        case CHANGE_HOME_TAB: {
+            let { target } = action;
+            return {
+                ...state,
+                selectedTab: target
 
             }
         }

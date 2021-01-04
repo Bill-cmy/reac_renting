@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Home from 'pages/home'
 import Citylist from 'pages/citylist'
 import Map from 'pages/map'
+import Detali from 'pages/detali'
 import store from 'store';
 export default class App extends Component {
   render() {
@@ -25,6 +26,8 @@ export default class App extends Component {
           <Route path='/citylist' component={Citylist} />
           {/* 地图页面 */}
           <Route path='/map' component={Map} />
+          {/* 详情页 */}
+          <Route path='/detali/:id' component={Detali} />
         </BrowserRouter>
       </Provider>
     )

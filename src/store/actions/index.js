@@ -1,5 +1,5 @@
 import { API } from "utils"
-import { FETCH_CITYLIST, SE_CURRENT_CITYT } from "store/constants"
+import { FETCH_CITYLIST, SE_CURRENT_CITYT, CHANGE_HOME_TAB } from "store/constants"
 // 获取城市列表
 export const fetchCityList = () => {
 
@@ -59,6 +59,15 @@ export const setCurrentCity = (cityNames) => {
             type: SE_CURRENT_CITYT,
             cityNames,
             sortedcList
+        })
+    }
+}
+// 改变tab页标签
+export const changeHomeTab = (target) => {
+    return (dispatch, getstate) => {
+        dispatch({
+            type: CHANGE_HOME_TAB,
+            target,
         })
     }
 }

@@ -98,7 +98,8 @@ class Index extends Component {
                     mode="light"
                     icon={<Icon type="left" />}
                     onLeftClick={this.goBack}
-                >城市选择</NavBar>
+                >城市选择
+                </NavBar>
                 {/* 列表组件开始 */}
                 <div className='list-area'>
                     <AutoSizer>
